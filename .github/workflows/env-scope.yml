@@ -1,0 +1,22 @@
+name: poc env scope
+on:
+  workflow_dispatch
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "TEST_ENV=abcd" >> $GITHUB_ENV
+
+      - run: |
+          echo ${{ env.TEST_ENV }}
+          echo $TEST_ENV
+        name: steps scope
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ env.TEST_ENV }}
+          echo $TEST_ENV
+        name: jobs scope
